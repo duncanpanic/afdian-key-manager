@@ -1,0 +1,28 @@
+# 复制为 .dev.vars 后填入真实值（本地开发用，不要提交到仓库）
+# 生产环境用 wrangler secret put XXX 写入
+
+# 管理员口令（AUTH_MODE=password 或 both 时生效）
+ADMIN_PASSWORD=change-this-to-a-long-random-string
+
+# 许可证签发私钥（PKCS#8 PEM，一行一个 \n 转义；或整段贴入）
+# 用 node scripts/genkey.mjs 生成
+LICENSE_PRIVATE_KEY=-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----
+
+# 爱发电开放平台 API Token
+AFDIAN_TOKEN=
+
+# 爱发电 user_id（32 位十六进制）。必须走 Secret，不要写进 wrangler.toml 的 vars
+AFDIAN_USER_ID=
+
+# 可选：管理接口的备选鉴权密钥（X-Admin-Key 头）。不设则关闭该路径
+ADMIN_API_KEY=
+
+# 管理台会话令牌的签名密钥（32 字节随机）。不设则回退用 ADMIN_PASSWORD 签，
+# 但那样 token 泄露后可离线爆破口令，强烈建议配置
+ADMIN_SESSION_SECRET=
+
+# 可选：API 域名（默认 https://afdian.com/api/open，旧域名 https://ifdian.net/api/open 也可用）
+# AFDIAN_API_BASE=
+
+# 可选：覆盖爱发电 webhook 验签公钥（默认用官方内置公钥）
+# AFDIAN_WEBHOOK_PUBKEY=

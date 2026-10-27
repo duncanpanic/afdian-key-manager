@@ -1,0 +1,70 @@
+# ============================================================
+# 复制本文件为 wrangler.toml 后填入你自己的值
+#   cp wrangler.toml.example wrangler.toml
+#
+# ⚠️ wrangler.toml 已被 .gitignore 排除，不会被提交。
+#    真实的 D1 ID / Access AUD / 自定义域名都属于你个人的部署信息，
+#    不要提交到公开仓库。
+# ============================================================
+
+name = "afdian-key-system"
+main = "src/index.js"
+compatibility_date = "2025-09-01"
+
+# 管理台静态资源（零构建，无 npm 依赖）
+[assets]
+directory = "./public"
+binding = "ASSETS"
+not_found_handling = "single-page-application"
+
+# ------------------------------------------------------------
+# D1 数据库
+# 创建：npx wrangler d1 create afdian_keys
+# 然后把输出的 database_id 填到下面
+# ------------------------------------------------------------
+[[d1_databases]]
+binding = "DB"
+database_name = "afdian_keys"
+database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+
+# ------------------------------------------------------------
+# 定时任务：每 10 分钟一次（对账补单 + 私信重试 + 每日清理）
+# ------------------------------------------------------------
+[triggers]
+crons = ["*/10 * * * *"]
+
+[vars]
+# 鉴权模式：access | password | both | none
+#   access   只认 Cloudflare Access（正式上线推荐）
+#   password 只用口令
+#   both     Access 或口令任一通过
+#   none     完全无鉴权（⚠️ 仅限本地调试，不要用于线上）
+AUTH_MODE = "access"
+
+# Cloudflare Access 的两个参数（AUTH_MODE 含 access 时必填）
+#   TEAM_DOMAIN：Zero Trust → Settings → General 里的 Team domain
+#   AUD：Access 应用详情页的 Application Audience (AUD) Tag
+CF_ACCESS_TEAM_DOMAIN = ""
+CF_ACCESS_AUD = ""
+
+# 注意：AFDIAN_USER_ID 与 AFDIAN_TOKEN 必须走 Secret，不要写在这里。
+# 同名时 [vars] 会覆盖 Secret，你会设了密钥却在线上读到空值。
+# 用 npx wrangler secret put AFDIAN_USER_ID 写入。
+
+# 客户端许可证令牌有效期（小时）
+TOKEN_TTL_HOURS = "24"
+# 自助解绑冷却天数
+SELF_UNBIND_COOLDOWN_DAYS = "30"
+# 老版 webhook 无签名时是否放行（0 = 不放行，保持 0）
+WEBHOOK_ALLOW_UNSIGNED = "0"
+# 管理台显示的站点名
+SITE_NAME = "Key 管理台"
+
+# ------------------------------------------------------------
+# 自定义域名（可选）
+# 你的域名必须已托管在同一个 Cloudflare 账号下。
+# 不需要自定义域名就整段注释掉，用 *.workers.dev 也可以。
+# ------------------------------------------------------------
+# [[routes]]
+# pattern = "key.example.com"
+# custom_domain = true

@@ -1,0 +1,38 @@
+# ============ 依赖与构建 ============
+node_modules/
+.wrangler/
+
+# ============ 密钥与凭证（绝对不能提交）============
+keys/
+*.pem
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
+
+# 运行时生成的管理密钥
+.admin_api_key
+.admin_api_key.*
+.admin_session_secret
+.admin_session_secret.*
+
+# ============ 本地数据与备份 ============
+data/
+*.db
+*.sqlite
+*.sqlite3
+.backup/
+*.sql.bak
+
+# ============ 真实的部署配置（含 D1 ID / AUD / 自定义域名）============
+# 仓库里只保留 wrangler.toml.example，真实配置请本地自行创建
+wrangler.toml
+
+# ============ 开发工具与临时文件 ============
+.workbuddy/
+.shots/
+.tmp-verify/
+*.log
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
