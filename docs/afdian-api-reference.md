@@ -443,20 +443,42 @@ https://afdian.com/order/create?plan_id=xxx&product_type=0&month=3&remark=hello
 
 ## 七、网页嵌入
 
-**赞助面板（iframe）**
+`slug` 取个人主页地址 `/a/` 后面那段。例如主页 `https://ifdian.net/a/DuncanPanic`，
+slug 就是 `DuncanPanic`。
+
+**① 赞助面板（iframe，桌面固定 640 宽）**
 
 ```html
-<iframe src="https://afdian.com/leaflet?slug=你的主页后缀"
+<iframe src="https://afdian.com/leaflet?slug=DuncanPanic"
   width="640" scrolling="no" height="200" frameborder="0"></iframe>
 ```
 
-**赞助按钮**
+**② 赞助面板（手机端自适应，宽度 < 700px 时铺满）**
 
 ```html
-<a href="https://afdian.com/a/你的主页后缀">
+<iframe id="afdian_leaflet" src="https://afdian.com/leaflet?slug=DuncanPanic"
+  width="640" scrolling="no" height="200" frameborder="0"></iframe>
+<script>
+  document.getElementById('afdian_leaflet').width =
+    window.innerWidth < 700 ? '100%' : '640';
+</script>
+```
+
+**③ 赞助按钮**
+
+```html
+<a href="https://ifdian.net/a/DuncanPanic">
   <img src="https://pic1.afdiancdn.com/static/img/welcome/button-sponsorme.png" width="200">
 </a>
 ```
+
+**注意**：
+
+- iframe 高度固定 200px，内容超出会出现滚动条；要完整展示方案列表，把 `height` 调大（常见 300–420）
+- **GitHub 渲染 README 时会移除 `<iframe>` / `<script>` / `<style>`**，所以 ①② 只适合自有站点、博客、论坛；
+  GitHub README 里只有 ③ 的图片按钮有效
+- 官方示例用 `document.body.clientWidth` 判断宽度，等价于 `window.innerWidth`；
+  元素 id 必须唯一，同一页放多个面板时分别起名（如 `afdian_leaflet_2`）
 
 ---
 
