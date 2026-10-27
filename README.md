@@ -7,6 +7,12 @@
 
 零构建、无框架依赖，全部跑在 Cloudflare 免费额度内。
 
+[![Cloudflare Workers](https://img.shields.io/badge/Cloudflare-Workers-F38020?logo=cloudflare&logoColor=white)](https://workers.cloudflare.com/)
+[![Cloudflare D1](https://img.shields.io/badge/DB-D1-F38020?logo=cloudflare&logoColor=white)](https://developers.cloudflare.com/d1/)
+![JWT RS256](https://img.shields.io/badge/JWT-RS256-000000?logo=jsonwebtokens&logoColor=white)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![赞助](https://img.shields.io/badge/%E2%98%95_%E8%B5%9E%E5%8A%A9-%E7%88%B1%E5%8F%91%E7%94%B5-946ce6)](https://ifdian.net/a/DuncanPanic)
+
 ---
 
 ## 它解决什么问题
